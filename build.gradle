@@ -3,7 +3,7 @@ buildscript {
     ext.spring_version = '1.4.0.RELEASE'
 
     repositories {
-        jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_version"
@@ -42,13 +42,15 @@ dependencies {
             "org.springframework.boot:spring-boot-starter-web",
             "org.springframework.boot:spring-boot-starter-actuator",
             'org.springframework.cloud:spring-cloud-starter-eureka',
-            "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+            "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
+            'org.jetbrains.xodus:xodus-openAPI:1.0.2',
+            'org.jetbrains.xodus:xodus-entity-store:1.0.2'
 
     runtime 'ch.qos.logback:logback-classic:1.1.7',
             'ch.qos.logback:logback-core:1.1.7'
 
     testCompile 'junit:junit:4.12',
-            'org.assertj:assertj-core:3.5.2',
+            "com.winterbe:expekt:0.5.0",
             'pl.pragmatists:JUnitParams:1.0.5'
 }
 
