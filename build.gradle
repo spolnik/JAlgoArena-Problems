@@ -34,8 +34,7 @@ jar {
 }
 
 dependencies {
-    compile 'com.google.guava:guava:18.0',
-            'com.fasterxml.jackson.core:jackson-databind',
+    compile 'com.fasterxml.jackson.core:jackson-databind',
             'com.fasterxml.jackson.core:jackson-core',
             'com.fasterxml.jackson.core:jackson-annotations',
             "com.fasterxml.jackson.module:jackson-module-kotlin",
@@ -50,8 +49,7 @@ dependencies {
             'ch.qos.logback:logback-core:1.1.7'
 
     testCompile 'junit:junit:4.12',
-            "com.winterbe:expekt:0.5.0",
-            'pl.pragmatists:JUnitParams:1.0.5'
+            "com.winterbe:expekt:0.5.0"
 }
 
 apply plugin: 'jacoco'
