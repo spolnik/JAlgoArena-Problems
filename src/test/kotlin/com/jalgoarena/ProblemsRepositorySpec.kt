@@ -11,18 +11,20 @@ import java.io.File
 
 class ProblemsRepositorySpec {
 
-    val repository: ProblemsRepository = ProblemsRepository("./ProblemsStoreForTests")
+    companion object {
+        var repository: ProblemsRepository
 
-    @Before
-    fun setUp() {
-        SetupProblemsStore("./ProblemsStoreForTests").create()
+        init {
+            SetupProblemsStore("./ProblemsStoreForTests").create()
+            repository = ProblemsRepository("./ProblemsStoreForTests")
+        }
+
+        @AfterClass
+        @JvmStatic fun tearDown() {
+            repository.destroy()
+            SetupProblemsStore("./ProblemsStoreForTests").remove()
+        }
     }
-
-    @After
-    fun tearDown() {
-        SetupProblemsStore("./ProblemsStoreForTests").remove()
-    }
-
 
     @Test
     fun should_return_all_available_problems() {
