@@ -19,6 +19,6 @@ class ProblemsRepositorySpec {
     @Test
     fun should_return_particular_problem() {
         val problem: Problem = repository.find("fib")!!
-        problem.title.should.equal("Fibbonacci")
+        problem.title.should.equal("Fibonacci")
     }
 }

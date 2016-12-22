@@ -9,32 +9,15 @@ class ProblemsRepository {
     val problemsStore: PersistentEntityStore =
             PersistentEntityStores.newInstance(Constants.problemsStorePath)
 
-    fun findAll(): List<Problem> {
-
-        var problems: List<Problem>? = null
-
-        problemsStore.executeInReadonlyTransaction { txn ->
-            val all = txn.getAll(Constants.problemEntityType)
-            problems = all.map { Problem.from(it) }
-        }
-
-        return problems!!
+    fun findAll(): List<Problem> = problemsStore.computeInReadonlyTransaction {
+        it.getAll(Constants.problemEntityType).map { Problem.from(it) }
     }
 
-    fun find(id: String): Problem? {
-
-        var problem: Problem? = null
-
-        problemsStore.executeInReadonlyTransaction { txn ->
-            val entity = txn.find(
-                    Constants.problemEntityType,
-                    Constants.problemId,
-                    id
-            )
-
-            problem = Problem.from(entity.first())
-        }
-
-        return problem
+    fun find(id: String): Problem? = problemsStore.computeInReadonlyTransaction { txn ->
+        txn.find(
+                Constants.problemEntityType,
+                Constants.problemId,
+                id
+        ).map { Problem.from(it) }.firstOrNull()
     }
 }
