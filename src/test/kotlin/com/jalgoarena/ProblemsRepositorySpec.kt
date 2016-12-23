@@ -39,6 +39,12 @@ class ProblemsRepositorySpec {
     }
 
     @Test
+    fun should_return_all_test_cases_for_particular_problem() {
+        val problem: Problem = repository.find("fib")!!
+        problem.testCases!!.size.should.equal(9)
+    }
+
+    @Test
     fun should_allow_on_adding_new_problem() {
         val problems = jacksonObjectMapper().readValue(
                 File("problems.json"), Array<Problem>::class.java

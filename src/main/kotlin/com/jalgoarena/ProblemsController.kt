@@ -12,13 +12,12 @@ class ProblemsController {
     @Autowired
     lateinit var repository: ProblemsRepository
 
-    @RequestMapping(path = arrayOf("/problems"), method = arrayOf(RequestMethod.GET), produces = arrayOf("application/json"))
+    @GetMapping("/problems", produces = arrayOf("application/json"))
     fun problems(): List<Problem> = repository.findAll()
 
-
-    @RequestMapping(path = arrayOf("/problems/{id}"), method = arrayOf(RequestMethod.GET), produces = arrayOf("application/json"))
+    @GetMapping("/problems/{id}", produces = arrayOf("application/json"))
     fun problem(@PathVariable id: String) = repository.find(id)
 
-    @RequestMapping(path = arrayOf("/problems/new"), method = arrayOf(RequestMethod.POST), produces = arrayOf("application/json"))
+    @PostMapping("/problems/new", produces = arrayOf("application/json"))
     fun newProblem(@RequestBody problem: Problem) = repository.add(problem)
 }
