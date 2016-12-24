@@ -15,6 +15,7 @@ class ProblemsRepository(dbName: String) {
 
     constructor() : this(Constants.storePath)
 
+    private val LOG = LoggerFactory.getLogger(this.javaClass)
     private val store: PersistentEntityStore = PersistentEntityStores.newInstance(dbName)
 
     fun findAll(): List<Problem> {
@@ -74,10 +75,6 @@ class ProblemsRepository(dbName: String) {
 
     private fun <T> readonly(call: (PersistentStoreTransaction) -> T): T {
         return readonly(store, call)
-    }
-
-    companion object {
-        private val LOG = LoggerFactory.getLogger(ProblemsRepository::class.java)
     }
 }
 
