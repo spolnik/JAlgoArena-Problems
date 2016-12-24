@@ -1,6 +1,7 @@
 package com.jalgoarena.data
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.jalgoarena.domain.Constants
 import com.jalgoarena.domain.Problem
 import jetbrains.exodus.entitystore.PersistentEntityStore
 import jetbrains.exodus.entitystore.PersistentEntityStores
@@ -12,20 +13,20 @@ import javax.annotation.PreDestroy
 @Repository
 class ProblemsRepository(dbName: String) {
 
-    constructor() : this(Constants.problemsStorePath)
+    constructor() : this(Constants.storePath)
 
-    val store: PersistentEntityStore = PersistentEntityStores.newInstance(dbName)
+    private val store: PersistentEntityStore = PersistentEntityStores.newInstance(dbName)
 
     fun findAll(): List<Problem> {
         return readonly {
-            it.getAll(Constants.problemEntityType).map { Problem.from(it) }
+            it.getAll(Constants.entityType).map { Problem.from(it) }
         }
     }
 
     fun find(id: String): Problem? {
         return readonly {
             it.find(
-                    Constants.problemEntityType,
+                    Constants.entityType,
                     Constants.problemId,
                     id
             ).map { Problem.from(it) }.firstOrNull()
@@ -34,7 +35,7 @@ class ProblemsRepository(dbName: String) {
 
     fun add(problem: Problem) {
         transactional {
-            it.newEntity(Constants.problemEntityType).apply {
+            it.newEntity(Constants.entityType).apply {
                 setProperty(Constants.problemId, problem.id)
                 setProperty(Constants.problemTitle, problem.title)
                 setProperty(Constants.problemDescription, problem.description)

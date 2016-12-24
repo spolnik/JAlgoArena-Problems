@@ -1,8 +1,8 @@
-package com.jalgoarena.data
+package com.jalgoarena.domain
 
 object Constants {
-    val problemEntityType = "Problem"
-    val problemsStorePath = "./ProblemsStore"
+    val entityType = "Problem"
+    val storePath = "./ProblemsStore"
     val problemId = "id"
     val problemTitle = "title"
     val problemDescription = "description"

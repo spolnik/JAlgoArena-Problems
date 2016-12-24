@@ -12,17 +12,18 @@ import java.io.File
 class ProblemsRepositorySpec {
 
     companion object {
+        val dbName = "./ProblemsStoreForTests"
         var repository: ProblemsRepository
 
         init {
-            SetupProblemsStore("./ProblemsStoreForTests").create()
-            repository = ProblemsRepository("./ProblemsStoreForTests")
+            SetupProblemsStore(dbName).create()
+            repository = ProblemsRepository(dbName)
         }
 
         @AfterClass
         @JvmStatic fun tearDown() {
             repository.destroy()
-            SetupProblemsStore("./ProblemsStoreForTests").remove()
+            SetupProblemsStore(dbName).remove()
         }
     }
 

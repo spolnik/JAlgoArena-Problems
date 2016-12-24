@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.jalgoarena.data.Constants
+import com.jalgoarena.domain.Constants
 import jetbrains.exodus.entitystore.Entity
 
 @JsonIgnoreProperties(ignoreUnknown = true)
