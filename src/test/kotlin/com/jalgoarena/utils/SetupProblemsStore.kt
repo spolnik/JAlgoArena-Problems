@@ -12,7 +12,7 @@ class SetupProblemsStore(val dbName: String) {
         return jacksonObjectMapper().writeValueAsString(obj)
     }
 
-    fun create() {
+    fun createDb() {
         val store = PersistentEntityStores.newInstance(dbName)
 
         try {
@@ -40,7 +40,13 @@ class SetupProblemsStore(val dbName: String) {
         }
     }
 
-    fun remove() {
+    fun removeDb() {
         File(dbName).deleteRecursively()
     }
+}
+
+fun main(args: Array<String>) {
+    val setup = SetupProblemsStore(Constants.storePath)
+    setup.removeDb()
+    setup.createDb()
 }

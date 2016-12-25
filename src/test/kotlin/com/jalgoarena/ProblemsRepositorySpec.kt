@@ -16,14 +16,14 @@ class ProblemsRepositorySpec {
         var repository: ProblemsRepository
 
         init {
-            SetupProblemsStore(dbName).create()
+            SetupProblemsStore(dbName).createDb()
             repository = ProblemsRepository(dbName)
         }
 
         @AfterClass
         @JvmStatic fun tearDown() {
             repository.destroy()
-            SetupProblemsStore(dbName).remove()
+            SetupProblemsStore(dbName).removeDb()
         }
     }
 
