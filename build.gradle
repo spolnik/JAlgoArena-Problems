@@ -81,6 +81,7 @@ task releaseZip(type: Zip, dependsOn: 'bootRepackage') {
     from 'run.sh'
     from('ProblemsStore') {
         into('ProblemsStore')
+        exclude('*.lck')
     }
     archiveName "JAlgoArena-Problems-${version}.zip"
     destinationDir(file('build/libs'))
