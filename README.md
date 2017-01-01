@@ -19,6 +19,7 @@ Demo: https://jalgoarena-ui.herokuapp.com/
 
 ## Components
 
+- [JAlgoArena](https://github.com/spolnik/JAlgoArena)
 - [JAlgoArena UI](https://github.com/spolnik/JAlgoArena-UI)
 - [JAlgoArena Judge](https://github.com/spolnik/JAlgoArena-Judge)
 - [JAlgoArena Auth Server](https://github.com/spolnik/JAlgoArena-Auth)
