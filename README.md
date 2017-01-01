@@ -8,6 +8,7 @@ Demo: https://jalgoarena-ui.herokuapp.com/
 - [Components](#components)
 - [Continuous Delivery](#continuous-delivery)
 - [Infrastructure](#infrastructure)
+- [Running Locally] (#running-locally)
 - [Notes](#notes)
 
 ## Introduction
@@ -38,6 +39,21 @@ Demo: https://jalgoarena-ui.herokuapp.com/
 - Xodus (embedded highly scalable database) - http://jetbrains.github.io/xodus/
 - Spring Boot, Spring Cloud (Eureka Client)
 - TravisCI - https://travis-ci.org/spolnik/JAlgoArena-Problems
+
+## Running locally
+
+There are two ways to run it - from sources or from binaries.
+- Default port: `5002`
+
+### Running from binaries
+- go to [releases page](https://github.com/spolnik/JAlgoArena-Problems/releases) and download last app package (JAlgoArena-Problems-[version_number].zip)
+- after unpacking it, go to folder and run `./run.sh` (to make it runnable, invoke command `chmod +x run.sh`)
+- you can modify port and Eureka service url in run.sh script, depending on your infrastructure settings. The script itself can be found in here: [run.sh](run.sh)
+
+### Running from sources
+- run `git clone https://github.com/spolnik/JAlgoArena-Problems` to clone locally the sources
+- now, you can build project with command `./gradlew clean bootRepackage` which will create runnable jar package with app sources. Next, run `java -Dserver.port=5002 -jar build\libs\jalgoarena-problems-*.jar` which will start application
+- there is second way to run app with gradle. Instead of running above, you can just run `./gradlew clean bootRun`
 
 ## Notes
 - [Running locally](https://github.com/spolnik/jalgoarena/wiki)
