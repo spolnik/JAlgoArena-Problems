@@ -34,9 +34,9 @@ class ProblemsRepository(dbName: String) {
         }
     }
 
-    fun add(problem: Problem) {
-        transactional {
-            it.newEntity(Constants.entityType).apply {
+    fun add(problem: Problem): Problem {
+        return transactional {
+            val entity = it.newEntity(Constants.entityType).apply {
                 setProperty(Constants.problemId, problem.id)
                 setProperty(Constants.problemTitle, problem.title)
                 setProperty(Constants.problemDescription, problem.description)
@@ -46,6 +46,7 @@ class ProblemsRepository(dbName: String) {
                 setProperty(Constants.problemFunction, toJson(problem.function!!))
                 setProperty(Constants.problemTestCases, toJson(problem.testCases!!))
             }
+            Problem.from(entity)
         }
     }
 

@@ -23,9 +23,9 @@ class ProblemsController(
     fun problem(@PathVariable id: String) = repository.find(id)
 
     @PostMapping("/problems/new", produces = arrayOf("application/json"))
-    fun newProblem(@RequestBody problem: Problem, @RequestHeader("X-Authorization") token: String) {
+    fun newProblem(@RequestBody problem: Problem, @RequestHeader("X-Authorization") token: String): Problem {
         val user = usersClient.findUser(token)
         validation.checkForAdmin(user)
-        repository.add(problem)
+        return repository.add(problem)
     }
 }
