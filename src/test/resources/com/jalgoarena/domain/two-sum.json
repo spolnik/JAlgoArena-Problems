@@ -1,0 +1,19 @@
+{
+  "name": "twoSum",
+  "return": {
+    "type": "[I",
+    "comment": " Indices of the two numbers"
+  },
+  "parameters": [
+    {
+      "name": "numbers",
+      "type": "[I",
+      "comment": "An array of Integer"
+    },
+    {
+      "name": "target",
+      "type": "java.lang.Integer",
+      "comment": "target = numbers[index1] + numbers[index2]"
+    }
+  ]
+}
