@@ -20,7 +20,7 @@ class FunctionSerializationTest {
     @Test
     fun should_serialize_function() {
         val functionAsJson = json.write(TWO_SUM_FUNCTION)
-        assertThat(functionAsJson).isEqualToJson("two-sum.json")
+        assertThat(functionAsJson).isEqualToJson("two-sum-function.json")
     }
 
     @Test

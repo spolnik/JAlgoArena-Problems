@@ -5,32 +5,35 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.jalgoarena.domain.Constants
 import jetbrains.exodus.entitystore.Entity
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-class Problem(val id: String,
+data class Problem(val id: String,
               val title: String,
               val description: String,
               val timeLimit: Long,
               val memoryLimit: Int,
               val function: Function?,
-              val testCases: Array<TestCase>?,
+              val testCases: List<TestCase>?,
               val level: Int) {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    class TestCase(val input: ArrayNode,
+    data class TestCase(val input: ArrayNode,
                    val output: JsonNode)
 
     companion object {
         fun from(entity: Entity): Problem {
 
             val functionAsJson = entity.getProperty(Constants.problemFunction)
-            val function = jacksonObjectMapper().readValue(functionAsJson as String, Function::class.java)
+            val function = jacksonObjectMapper().readValue(
+                    functionAsJson as String, Function::class.java
+            )
 
             val testCasesAsJson = entity.getProperty(Constants.problemTestCases)
-            val testCases = jacksonObjectMapper().readValue(testCasesAsJson as String, Array<TestCase>::class.java)
+            val testCases = jacksonObjectMapper().readValue(
+                    testCasesAsJson as String, Array<TestCase>::class.java
+            )
 
             return Problem(
                     entity.getProperty(Constants.problemId) as String,
@@ -39,7 +42,7 @@ class Problem(val id: String,
                     entity.getProperty(Constants.problemTimeLimit) as Long,
                     entity.getProperty(Constants.problemMemoryLimit) as Int,
                     function,
-                    testCases,
+                    testCases.toList(),
                     entity.getProperty(Constants.problemLevel) as Int
             )
         }
