@@ -2,7 +2,6 @@ package com.jalgoarena.web
 
 import com.jalgoarena.data.ProblemsRepository
 import com.jalgoarena.domain.Problem
-import com.jalgoarena.domain.User
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -32,12 +31,11 @@ class ProblemsController(
 
         val user = usersClient.findUser(token)
 
-        return if (isAdmin(user)) {
-            ResponseEntity(repository.addOrUpdate(problem), HttpStatus.CREATED)
-        } else {
-            ResponseEntity(HttpStatus.UNAUTHORIZED)
+        return when {
+            "ADMIN" == user.role -> ResponseEntity(
+                    repository.addOrUpdate(problem), HttpStatus.CREATED
+            )
+            else -> ResponseEntity(HttpStatus.UNAUTHORIZED)
         }
     }
-
-    private fun isAdmin(user: User) = "ADMIN" == user.role
 }
