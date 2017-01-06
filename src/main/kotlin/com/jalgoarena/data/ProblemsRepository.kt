@@ -3,12 +3,12 @@ package com.jalgoarena.data
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.jalgoarena.domain.Constants
 import com.jalgoarena.domain.Problem
+import jetbrains.exodus.entitystore.Entity
 import jetbrains.exodus.entitystore.PersistentEntityStore
 import jetbrains.exodus.entitystore.PersistentEntityStores
 import jetbrains.exodus.entitystore.PersistentStoreTransaction
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Repository
-import javax.annotation.PreDestroy
 
 @Repository
 class ProblemsRepository(dbName: String) {
@@ -34,23 +34,37 @@ class ProblemsRepository(dbName: String) {
         }
     }
 
-    fun add(problem: Problem): Problem {
+    fun addOrUpdate(problem: Problem): Problem {
         return transactional {
-            val entity = it.newEntity(Constants.entityType).apply {
-                setProperty(Constants.problemId, problem.id)
-                setProperty(Constants.problemTitle, problem.title)
-                setProperty(Constants.problemDescription, problem.description)
-                setProperty(Constants.problemLevel, problem.level)
-                setProperty(Constants.problemMemoryLimit, problem.memoryLimit)
-                setProperty(Constants.problemTimeLimit, problem.timeLimit)
-                setProperty(Constants.problemFunction, toJson(problem.function!!))
-                setProperty(Constants.problemTestCases, toJson(problem.testCases!!))
+
+            val existingEntity = it.find(
+                    Constants.entityType, Constants.problemId, problem.id
+            ).firstOrNull()
+
+            val entity = when (existingEntity) {
+                null -> it.newEntity(Constants.entityType)
+                else -> existingEntity
             }
-            Problem.from(entity)
+
+            updateEntity(entity, problem)
         }
     }
 
-    @PreDestroy
+    private fun updateEntity(entity: Entity, problem: Problem): Problem {
+        entity.apply {
+            setProperty(Constants.problemId, problem.id)
+            setProperty(Constants.problemTitle, problem.title)
+            setProperty(Constants.problemDescription, problem.description)
+            setProperty(Constants.problemLevel, problem.level)
+            setProperty(Constants.problemMemoryLimit, problem.memoryLimit)
+            setProperty(Constants.problemTimeLimit, problem.timeLimit)
+            setProperty(Constants.problemFunction, toJson(problem.function!!))
+            setProperty(Constants.problemTestCases, toJson(problem.testCases!!))
+        }
+
+        return Problem.from(entity)
+    }
+
     fun destroy() {
         var proceed = true
         var count = 1

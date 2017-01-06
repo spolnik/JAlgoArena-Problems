@@ -64,7 +64,7 @@ class ProblemsRepositorySpec {
                 fibProblem.level
         )
 
-        repository.add(newTestProblem)
+        repository.addOrUpdate(newTestProblem)
 
         val savedProblem = repository.find("test-fib")
         savedProblem!!.title.should.equal("Test Title")
