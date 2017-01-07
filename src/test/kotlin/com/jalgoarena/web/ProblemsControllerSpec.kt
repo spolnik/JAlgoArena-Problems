@@ -1,12 +1,7 @@
 package com.jalgoarena.web
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.node.ArrayNode
-import com.fasterxml.jackson.databind.node.IntNode
-import com.fasterxml.jackson.databind.node.JsonNodeFactory
 import com.jalgoarena.data.ProblemsRepository
-import com.jalgoarena.domain.Function
-import com.jalgoarena.domain.Problem
 import com.jalgoarena.domain.User
 import com.jalgoarena.utils.SetupProblemsStore
 import org.hamcrest.CoreMatchers.`is`
@@ -59,7 +54,7 @@ open class ProblemsControllerSpec {
     private lateinit var usersClient: UsersClient
 
     @Test
-    fun returns_fib_problem_successfully() {
+    fun returns_200_and_queried_problem() {
         mockMvc.perform(get("/problems/fib")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk)
@@ -68,7 +63,7 @@ open class ProblemsControllerSpec {
     }
 
     @Test
-    fun returns_all_problems() {
+    fun returns_200_and_all_problems() {
         mockMvc.perform(get("/problems")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk)
@@ -76,7 +71,7 @@ open class ProblemsControllerSpec {
     }
 
     @Test
-    fun adding_new_problem_without_authorization_token_results_in_401() {
+    fun returns_401_when_new_problem_is_added_without_authorization_token() {
         mockMvc.perform(post("/problems/new")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(TWO_SUM_PROBLEM_JSON))
@@ -84,7 +79,7 @@ open class ProblemsControllerSpec {
     }
 
     @Test
-    fun adding_new_problem_by_user_results_in_401() {
+    fun returns_401_when_new_problem_is_added_by_non_admin_user() {
         val dummyToken = "Bearer 123j12n31lkmdp012j21d"
         given(usersClient.findUser(dummyToken)).willReturn(User("USER"))
 
@@ -96,7 +91,19 @@ open class ProblemsControllerSpec {
     }
 
     @Test
-    fun adds_new_problem() {
+    fun returns_401_when_new_problem_is_added_by_unidentified_user() {
+        val dummyToken = "Bearer 123j12n31lkmdp012j21d"
+        given(usersClient.findUser(dummyToken)).willReturn(null)
+
+        mockMvc.perform(post("/problems/new")
+                .header("X-Authorization", dummyToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(TWO_SUM_PROBLEM_JSON))
+                .andExpect(status().isUnauthorized)
+    }
+
+    @Test
+    fun returns_201_and_newly_added_problem() {
         val dummyToken = "Bearer 123j12n31lkmdp012j21d"
         given(usersClient.findUser(dummyToken)).willReturn(User("ADMIN"))
 

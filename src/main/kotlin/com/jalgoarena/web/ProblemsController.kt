@@ -2,6 +2,7 @@ package com.jalgoarena.web
 
 import com.jalgoarena.data.ProblemsRepository
 import com.jalgoarena.domain.Problem
+import com.jalgoarena.domain.User
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -11,8 +12,8 @@ import javax.inject.Inject
 @RestController
 class ProblemsController(
         @Inject val usersClient: UsersClient,
-        @Inject val repository: ProblemsRepository
-) {
+        @Inject val repository: ProblemsRepository) {
+
     @GetMapping("/problems", produces = arrayOf("application/json"))
     fun problems(): List<Problem> = repository.findAll()
 
@@ -23,19 +24,21 @@ class ProblemsController(
     fun newProblem(
             @RequestBody problem: Problem,
             @RequestHeader("X-Authorization", required = false) token: String?
-    ): ResponseEntity<Problem> {
-
-        if (token == null) {
-            return ResponseEntity(HttpStatus.UNAUTHORIZED)
-        }
-
-        val user = usersClient.findUser(token)
-
-        return when {
-            "ADMIN" == user.role -> ResponseEntity(
-                    repository.addOrUpdate(problem), HttpStatus.CREATED
-            )
-            else -> ResponseEntity(HttpStatus.UNAUTHORIZED)
+    ) = checkUser(token) { user ->
+        when {
+            "ADMIN" == user.role -> ResponseEntity(repository.addOrUpdate(problem), HttpStatus.CREATED)
+            else -> unauthorized()
         }
     }
+
+    private fun <T> checkUser(token: String?, action: (User) -> ResponseEntity<T>): ResponseEntity<T> {
+        if (token == null) {
+            return unauthorized()
+        }
+
+        val user = usersClient.findUser(token) ?: return unauthorized()
+        return action(user)
+    }
+
+    private fun <T> unauthorized(): ResponseEntity<T> = ResponseEntity(HttpStatus.UNAUTHORIZED)
 }
