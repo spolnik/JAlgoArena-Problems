@@ -19,8 +19,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import javax.inject.Inject
@@ -72,7 +71,7 @@ open class ProblemsControllerSpec {
 
     @Test
     fun returns_401_when_new_problem_is_added_without_authorization_token() {
-        mockMvc.perform(post("/problems/new")
+        mockMvc.perform(put("/problems")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(TWO_SUM_PROBLEM_JSON))
                 .andExpect(status().isUnauthorized)
@@ -80,11 +79,10 @@ open class ProblemsControllerSpec {
 
     @Test
     fun returns_401_when_new_problem_is_added_by_non_admin_user() {
-        val dummyToken = "Bearer 123j12n31lkmdp012j21d"
-        given(usersClient.findUser(dummyToken)).willReturn(User("USER"))
+        given(usersClient.findUser(DUMMY_TOKEN)).willReturn(User("USER"))
 
-        mockMvc.perform(post("/problems/new")
-                .header("X-Authorization", dummyToken)
+        mockMvc.perform(put("/problems")
+                .header("X-Authorization", DUMMY_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(TWO_SUM_PROBLEM_JSON))
                 .andExpect(status().isUnauthorized)
@@ -92,11 +90,10 @@ open class ProblemsControllerSpec {
 
     @Test
     fun returns_401_when_new_problem_is_added_by_unidentified_user() {
-        val dummyToken = "Bearer 123j12n31lkmdp012j21d"
-        given(usersClient.findUser(dummyToken)).willReturn(null)
+        given(usersClient.findUser(DUMMY_TOKEN)).willReturn(null)
 
-        mockMvc.perform(post("/problems/new")
-                .header("X-Authorization", dummyToken)
+        mockMvc.perform(put("/problems")
+                .header("X-Authorization", DUMMY_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(TWO_SUM_PROBLEM_JSON))
                 .andExpect(status().isUnauthorized)
@@ -104,11 +101,10 @@ open class ProblemsControllerSpec {
 
     @Test
     fun returns_201_and_newly_added_problem() {
-        val dummyToken = "Bearer 123j12n31lkmdp012j21d"
-        given(usersClient.findUser(dummyToken)).willReturn(User("ADMIN"))
+        given(usersClient.findUser(DUMMY_TOKEN)).willReturn(User("ADMIN"))
 
-        mockMvc.perform(post("/problems/new")
-                .header("X-Authorization", dummyToken)
+        mockMvc.perform(put("/problems")
+                .header("X-Authorization", DUMMY_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(TWO_SUM_PROBLEM_JSON))
                 .andExpect(status().isCreated)
@@ -120,6 +116,8 @@ open class ProblemsControllerSpec {
         @Bean
         open fun problemsRepository() = repository
     }
+
+    private val DUMMY_TOKEN = "Bearer 123j12n31lkmdp012j21d"
 
     @Language("JSON")
     private val TWO_SUM_PROBLEM_JSON = """{

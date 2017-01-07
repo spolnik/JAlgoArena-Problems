@@ -20,8 +20,8 @@ class ProblemsController(
     @GetMapping("/problems/{id}", produces = arrayOf("application/json"))
     fun problem(@PathVariable id: String) = repository.find(id)
 
-    @PostMapping("/problems/new", produces = arrayOf("application/json"))
-    fun newProblem(
+    @PutMapping("/problems", produces = arrayOf("application/json"))
+    fun addOrUpdateProblem(
             @RequestBody problem: Problem,
             @RequestHeader("X-Authorization", required = false) token: String?
     ) = checkUser(token) { user ->
