@@ -85,18 +85,10 @@ class XodusProblemsRepository(dbName: String) : ProblemsRepository {
             jacksonObjectMapper().writeValueAsString(obj)
 
     private fun <T> transactional(call: (PersistentStoreTransaction) -> T): T {
-        return transactional(store, call)
+        return store.computeInTransaction { call(it as PersistentStoreTransaction) }
     }
 
     private fun <T> readonly(call: (PersistentStoreTransaction) -> T): T {
-        return readonly(store, call)
+        return store.computeInReadonlyTransaction { call(it as PersistentStoreTransaction) }
     }
-}
-
-fun <T> transactional(store: PersistentEntityStore, call: (PersistentStoreTransaction) -> T): T {
-    return store.computeInTransaction { call(it as PersistentStoreTransaction) }
-}
-
-fun <T> readonly(store: PersistentEntityStore, call: (PersistentStoreTransaction) -> T): T {
-    return store.computeInReadonlyTransaction { call(it as PersistentStoreTransaction) }
 }
