@@ -2,6 +2,7 @@ package com.jalgoarena
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.jalgoarena.data.ProblemsRepository
+import com.jalgoarena.data.XodusProblemsRepository
 import com.jalgoarena.domain.Problem
 import com.jalgoarena.utils.SetupProblemsStore
 import com.winterbe.expekt.should
@@ -17,7 +18,7 @@ class ProblemsRepositorySpec {
 
         init {
             SetupProblemsStore(dbName).createDb()
-            repository = ProblemsRepository(dbName)
+            repository = XodusProblemsRepository(dbName)
         }
 
         @AfterClass

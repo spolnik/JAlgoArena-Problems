@@ -12,7 +12,8 @@ import javax.inject.Inject
 @RestController
 class ProblemsController(
         @Inject val usersClient: UsersClient,
-        @Inject val repository: ProblemsRepository) {
+        @Inject val repository: ProblemsRepository
+) {
 
     @GetMapping("/problems", produces = arrayOf("application/json"))
     fun problems(): List<Problem> = repository.findAll()

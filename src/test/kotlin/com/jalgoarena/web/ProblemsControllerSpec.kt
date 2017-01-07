@@ -2,6 +2,7 @@ package com.jalgoarena.web
 
 import com.fasterxml.jackson.databind.node.ArrayNode
 import com.jalgoarena.data.ProblemsRepository
+import com.jalgoarena.data.XodusProblemsRepository
 import com.jalgoarena.domain.User
 import com.jalgoarena.utils.SetupProblemsStore
 import org.hamcrest.CoreMatchers.`is`
@@ -36,7 +37,7 @@ open class ProblemsControllerSpec {
 
         init {
             SetupProblemsStore(dbName).createDb()
-            repository = ProblemsRepository(dbName)
+            repository = XodusProblemsRepository(dbName)
         }
 
         @AfterClass
