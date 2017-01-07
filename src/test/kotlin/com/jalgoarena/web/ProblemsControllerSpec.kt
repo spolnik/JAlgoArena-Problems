@@ -11,6 +11,7 @@ import com.jalgoarena.domain.User
 import com.jalgoarena.utils.SetupProblemsStore
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.Matchers.hasSize
+import org.intellij.lang.annotations.Language
 import org.junit.AfterClass
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -32,8 +33,8 @@ import javax.inject.Inject
 
 @RunWith(SpringRunner::class)
 @WebMvcTest(ProblemsController::class)
-@ContextConfiguration(classes = arrayOf(ProblemsControllerTest.ProblemsControllerTestConfiguration::class))
-open class ProblemsControllerTest {
+@ContextConfiguration(classes = arrayOf(ProblemsControllerSpec.ControllerTestConfiguration::class))
+open class ProblemsControllerSpec {
 
     companion object {
         val dbName = "./ProblemsStoreForControllerTests"
@@ -53,9 +54,6 @@ open class ProblemsControllerTest {
 
     @Inject
     private lateinit var mockMvc: MockMvc
-
-    @Inject
-    private lateinit var objectMapper: ObjectMapper
 
     @MockBean
     private lateinit var usersClient: UsersClient
@@ -81,7 +79,7 @@ open class ProblemsControllerTest {
     fun adding_new_problem_without_authorization_token_results_in_401() {
         mockMvc.perform(post("/problems/new")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(TWO_SUM_PROBLEM)))
+                .content(TWO_SUM_PROBLEM_JSON))
                 .andExpect(status().isUnauthorized)
     }
 
@@ -93,7 +91,7 @@ open class ProblemsControllerTest {
         mockMvc.perform(post("/problems/new")
                 .header("X-Authorization", dummyToken)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(TWO_SUM_PROBLEM)))
+                .content(TWO_SUM_PROBLEM_JSON))
                 .andExpect(status().isUnauthorized)
     }
 
@@ -105,47 +103,75 @@ open class ProblemsControllerTest {
         mockMvc.perform(post("/problems/new")
                 .header("X-Authorization", dummyToken)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(TWO_SUM_PROBLEM)))
+                .content(TWO_SUM_PROBLEM_JSON))
                 .andExpect(status().isCreated)
                 .andExpect(jsonPath("$.id", `is`("2-sum")))
     }
 
     @TestConfiguration
-    open class ProblemsControllerTestConfiguration {
+    open class ControllerTestConfiguration {
         @Bean
-        open fun problemsRepository() = ProblemsControllerTest.repository
+        open fun problemsRepository() = repository
     }
 
-    private val TWO_SUM_PROBLEM = Problem(
-            "2-sum",
-            "2 Sum",
-            "Given an array of integers, find two numbers such that they addOrUpdate up to a specific target number.\r\n\r\nThe function `twoSum` should return indices of the two numbers such that they addOrUpdate up to the target, where *index1* must be less than *index2*. Please note that your returned answers (both *index1* and *index2*) are not zero-based.\r\n\r\n**Note**: You may assume that each input would have exactly one solution.\r\n\r\n### Example\r\n\r\n* `[2,7,11,15], 9` -> `[1,2]`",
-            1L,
-            32,
-            Function("twoSum",
-                    Function.Return("[I",
-                            " Indices of the two numbers"),
-                    listOf(Function.Parameter("nums", "[I", "An array of Integer"),
-                            Function.Parameter("target", "java.lang.Integer",
-                                    "target = numbers[index1] + numbers[index2]")
-                    )
-            ),
-            listOf(
-                    Problem.TestCase(
-                            arrayNode().add(
-                                    arrayNode().add(2).add(7).add(11).add(15)
-                            ).add(IntNode(9)),
-                            arrayNode().add(1).add(2)
-                    ),
-                    Problem.TestCase(
-                            arrayNode().add(
-                                    arrayNode().add(1).add(0).add(-1)
-                            ).add(IntNode(-1)),
-                            arrayNode().add(2).add(3)
-                    )
-            ),
-            2
-    )
-
-    private fun arrayNode() = ArrayNode(JsonNodeFactory.instance)
+    @Language("JSON")
+    private val TWO_SUM_PROBLEM_JSON = """{
+  "id": "2-sum",
+  "title": "2 Sum",
+  "description": "Given an array of integers, find two numbers such that they add up to a specific target number.\r\n\r\nThe function `twoSum` should return indices of the two numbers such that they add up to the target, where *index1* must be less than *index2*. Please note that your returned answers (both *index1* and *index2*) are not zero-based.\r\n\r\n**Note**: You may assume that each input would have exactly one solution.\r\n\r\n### Example\r\n\r\n* `[2,7,11,15], 9` -> `[1,2]`",
+  "timeLimit": 1,
+  "memoryLimit": 32,
+  "function": {
+    "name": "twoSum",
+    "return": {
+      "type": "[I",
+      "comment": " Indices of the two numbers"
+    },
+    "parameters": [
+      {
+        "name": "nums",
+        "type": "[I",
+        "comment": "An array of Integer"
+      },
+      {
+        "name": "target",
+        "type": "java.lang.Integer",
+        "comment": "target = numbers[index1] + numbers[index2]"
+      }
+    ]
+  },
+  "testCases": [
+    {
+      "input": [
+        [
+          2,
+          7,
+          11,
+          15
+        ],
+        9
+      ],
+      "output": [
+        1,
+        2
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          0,
+          -1
+        ],
+        -1
+      ],
+      "output": [
+        2,
+        3
+      ]
+    }
+  ],
+  "level": 2
+}
+"""
 }
