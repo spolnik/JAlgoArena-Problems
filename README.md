@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f2ca45a58c8949c2a86ef763c56d8eb3)](https://www.codacy.com/app/jacek-spolnik/JAlgoArena-Problems?utm_source=github.com&utm_medium=referral&utm_content=spolnik/JAlgoArena-Problems&utm_campaign=badger)
 # JAlgoArena Problems [![Build Status](https://travis-ci.org/spolnik/JAlgoArena-Problems.svg?branch=master)](https://travis-ci.org/spolnik/JAlgoArena-Problems) [![codecov](https://codecov.io/gh/spolnik/JAlgoArena-Problems/branch/master/graph/badge.svg)](https://codecov.io/gh/spolnik/JAlgoArena-Problems) [![GitHub release](https://img.shields.io/github/release/spolnik/jalgoarena-problems.svg)]()
 
 JAlgoArena Problems is service dedicated for keeping problems definitions and their meta-data.
