@@ -66,18 +66,12 @@ class XodusProblemsRepository(dbName: String) : ProblemsRepository {
     }
 
     override fun destroy() {
-        var proceed = true
-        var count = 1
-        while (proceed && count <= 10) {
-            try {
-                LOG.info("trying to close persistent store. attempt {}", count)
-                store.close()
-                proceed = false
-                LOG.info("persistent store closed")
-            } catch (e: RuntimeException) {
-                LOG.error("error closing persistent store", e)
-                count++
-            }
+        try {
+            LOG.info("Closing persistent store.")
+            store.close()
+            LOG.info("persistent store closed")
+        } catch (e: RuntimeException) {
+            LOG.error("error closing persistent store", e)
         }
     }
 

@@ -1,12 +1,11 @@
-package com.jalgoarena
+package com.jalgoarena.data
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.jalgoarena.data.ProblemsRepository
-import com.jalgoarena.data.XodusProblemsRepository
 import com.jalgoarena.domain.Problem
 import com.jalgoarena.utils.SetupProblemsStore
 import com.winterbe.expekt.should
-import org.junit.*
+import org.junit.AfterClass
+import org.junit.Test
 import java.io.File
 
 
