@@ -6,6 +6,7 @@ import org.intellij.lang.annotations.Language
 import org.junit.Before
 import org.junit.Test
 import org.springframework.boot.test.json.JacksonTester
+import org.springframework.boot.test.json.JacksonTester.initFields
 
 class UserSerializationTest {
 
@@ -14,7 +15,7 @@ class UserSerializationTest {
     @Before
     fun setup() {
         val objectMapper = jacksonObjectMapper()
-        JacksonTester.initFields(this, objectMapper)
+        initFields(this, objectMapper)
     }
 
     @Test

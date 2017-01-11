@@ -1,36 +1,38 @@
 package com.jalgoarena.web
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.jalgoarena.domain.User
 import com.netflix.discovery.EurekaClient
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import org.slf4j.LoggerFactory
+import org.springframework.http.HttpEntity
+import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Service
+import org.springframework.web.client.RestOperations
 import javax.inject.Inject
 
 @Service
-class HttpUsersClient(@Inject val discoveryClient: EurekaClient) : UsersClient {
+class HttpUsersClient(
+        @Inject private val discoveryClient: EurekaClient,
+        @Inject private val restTemplate : RestOperations
+) : UsersClient {
 
     private val LOG = LoggerFactory.getLogger(this.javaClass)
 
-    private fun authServiceUrl(): String {
-        val instance = discoveryClient.getNextServerFromEureka("jalgoarena-auth", false)
-        return instance.homePageUrl
-    }
-
-    private val httpClient = OkHttpClient()
-    private val objectMapper = jacksonObjectMapper()
+    private fun authServiceUrl() =
+            discoveryClient.getNextServerFromEureka("jalgoarena-auth", false).homePageUrl
 
     override fun findUser(token: String): User? {
-        val request = Request.Builder()
-                .url("${authServiceUrl()}/api/user")
-                .addHeader("X-Authorization", token)
-                .build()
 
         return try {
-            val response = httpClient.newCall(request).execute()
-            objectMapper.readValue(response.body().string(), User::class.java)
+            val headers = HttpHeaders().apply {
+                set("X-Authorization", token)
+            }
+
+            val entity = HttpEntity<HttpHeaders>(headers)
+
+            val response = restTemplate.exchange(
+                    "${authServiceUrl()}/api/user", HttpMethod.GET, entity, User::class.java)
+            response.body
         } catch(e: Exception) {
             LOG.error(e.message)
             null
