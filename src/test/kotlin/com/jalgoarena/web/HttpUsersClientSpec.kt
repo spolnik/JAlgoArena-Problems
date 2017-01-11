@@ -42,6 +42,14 @@ class HttpUsersClientSpec {
         assertThat(user!!.role).isEqualTo(USER_ROLE)
     }
 
+    @Test
+    fun returns_null_if_there_is_any_issue_with_response() {
+        givenDiscoveryService()
+
+        val user = usersClient.findUser(DUMMY_TOKEN)
+        assertThat(user).isNull()
+    }
+
     private fun givenDiscoveryService() {
         val instanceInfo = mock(InstanceInfo::class.java)
 

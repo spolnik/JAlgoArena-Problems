@@ -34,7 +34,7 @@ class HttpUsersClient(
                     "${authServiceUrl()}/api/user", HttpMethod.GET, entity, User::class.java)
             response.body
         } catch(e: Exception) {
-            LOG.error(e.message)
+            LOG.error("Error in querying jalgoarena auth service", e)
             null
         }
     }
