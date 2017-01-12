@@ -21,21 +21,18 @@ class HttpUsersClient(
     private fun authServiceUrl() =
             discoveryClient.getNextServerFromEureka("jalgoarena-auth", false).homePageUrl
 
-    override fun findUser(token: String): User? {
-
-        return try {
-            val headers = HttpHeaders().apply {
-                set("X-Authorization", token)
-            }
-
-            val entity = HttpEntity<HttpHeaders>(headers)
-
-            val response = restTemplate.exchange(
-                    "${authServiceUrl()}/api/user", HttpMethod.GET, entity, User::class.java)
-            response.body
-        } catch(e: Exception) {
-            LOG.error("Error in querying jalgoarena auth service", e)
-            null
+    override fun findUser(token: String) = try {
+        val headers = HttpHeaders().apply {
+            set("X-Authorization", token)
         }
+
+        val entity = HttpEntity<HttpHeaders>(headers)
+
+        val response = restTemplate.exchange(
+                "${authServiceUrl()}/api/user", HttpMethod.GET, entity, User::class.java)
+        response.body
+    } catch(e: Exception) {
+        LOG.error("Error in querying jalgoarena auth service", e)
+        null
     }
 }
