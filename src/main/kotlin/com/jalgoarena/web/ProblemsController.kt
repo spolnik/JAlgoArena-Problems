@@ -11,8 +11,8 @@ import javax.inject.Inject
 @CrossOrigin
 @RestController
 class ProblemsController(
-        @Inject val usersClient: UsersClient,
-        @Inject val repository: ProblemsRepository
+        @Inject private val usersClient: UsersClient,
+        @Inject private val repository: ProblemsRepository
 ) {
 
     @GetMapping("/problems", produces = arrayOf("application/json"))
