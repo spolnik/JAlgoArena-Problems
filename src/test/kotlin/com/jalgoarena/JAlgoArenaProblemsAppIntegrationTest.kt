@@ -12,9 +12,6 @@ import org.springframework.test.context.junit4.SpringRunner
 import javax.inject.Inject
 import org.springframework.boot.test.mock.mockito.MockBean
 
-
-
-
 @RunWith(SpringRunner::class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class JAlgoArenaProblemsAppIntegrationTest {
