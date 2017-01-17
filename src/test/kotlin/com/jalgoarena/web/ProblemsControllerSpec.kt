@@ -5,6 +5,7 @@ import com.jalgoarena.data.ProblemsRepository
 import com.jalgoarena.data.XodusProblemsRepository
 import com.jalgoarena.utils.SetupProblemsStore
 import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.Matchers.greaterThan
 import org.hamcrest.Matchers.hasSize
 import org.intellij.lang.annotations.Language
 import org.junit.AfterClass
@@ -60,7 +61,7 @@ open class ProblemsControllerSpec {
         mockMvc.perform(get("/problems")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk)
-                .andExpect(jsonPath("$", hasSize<ArrayNode>(55)))
+                .andExpect(jsonPath("$", hasSize<ArrayNode>(greaterThan(54))))
     }
 
     @TestConfiguration
@@ -68,65 +69,4 @@ open class ProblemsControllerSpec {
         @Bean
         open fun problemsRepository() = repository
     }
-
-    @Language("JSON")
-    private val TWO_SUM_PROBLEM_JSON = """{
-  "id": "2-sum",
-  "title": "2 Sum",
-  "description": "Given an array of integers, find two numbers such that they add up to a specific target number.\r\n\r\nThe function `twoSum` should return indices of the two numbers such that they add up to the target, where *index1* must be less than *index2*. Please note that your returned answers (both *index1* and *index2*) are not zero-based.\r\n\r\n**Note**: You may assume that each input would have exactly one solution.\r\n\r\n### Example\r\n\r\n* `[2,7,11,15], 9` -> `[1,2]`",
-  "timeLimit": 1,
-  "memoryLimit": 32,
-  "function": {
-    "name": "twoSum",
-    "return": {
-      "type": "[I",
-      "comment": " Indices of the two numbers"
-    },
-    "parameters": [
-      {
-        "name": "nums",
-        "type": "[I",
-        "comment": "An array of Integer"
-      },
-      {
-        "name": "target",
-        "type": "java.lang.Integer",
-        "comment": "target = numbers[index1] + numbers[index2]"
-      }
-    ]
-  },
-  "testCases": [
-    {
-      "input": [
-        [
-          2,
-          7,
-          11,
-          15
-        ],
-        9
-      ],
-      "output": [
-        1,
-        2
-      ]
-    },
-    {
-      "input": [
-        [
-          1,
-          0,
-          -1
-        ],
-        -1
-      ],
-      "output": [
-        2,
-        3
-      ]
-    }
-  ],
-  "level": 2
-}
-"""
 }
