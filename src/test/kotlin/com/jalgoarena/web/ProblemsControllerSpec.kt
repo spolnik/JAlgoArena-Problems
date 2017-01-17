@@ -3,7 +3,6 @@ package com.jalgoarena.web
 import com.fasterxml.jackson.databind.node.ArrayNode
 import com.jalgoarena.data.ProblemsRepository
 import com.jalgoarena.data.XodusProblemsRepository
-import com.jalgoarena.domain.User
 import com.jalgoarena.utils.SetupProblemsStore
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.Matchers.hasSize
@@ -11,20 +10,17 @@ import org.intellij.lang.annotations.Language
 import org.junit.AfterClass
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.BDDMockito.given
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.context.TestConfiguration
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.context.annotation.Bean
 import org.springframework.http.MediaType
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import javax.inject.Inject
-
 
 @RunWith(SpringRunner::class)
 @WebMvcTest(ProblemsController::class)
@@ -50,9 +46,6 @@ open class ProblemsControllerSpec {
     @Inject
     private lateinit var mockMvc: MockMvc
 
-    @MockBean
-    private lateinit var usersClient: UsersClient
-
     @Test
     fun returns_200_and_queried_problem() {
         mockMvc.perform(get("/problems/fib")
@@ -70,55 +63,11 @@ open class ProblemsControllerSpec {
                 .andExpect(jsonPath("$", hasSize<ArrayNode>(54)))
     }
 
-    @Test
-    fun returns_401_when_new_problem_is_added_without_authorization_token() {
-        mockMvc.perform(put("/problems")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(TWO_SUM_PROBLEM_JSON))
-                .andExpect(status().isUnauthorized)
-    }
-
-    @Test
-    fun returns_401_when_new_problem_is_added_by_non_admin_user() {
-        given(usersClient.findUser(DUMMY_TOKEN)).willReturn(User("USER"))
-
-        mockMvc.perform(put("/problems")
-                .header("X-Authorization", DUMMY_TOKEN)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(TWO_SUM_PROBLEM_JSON))
-                .andExpect(status().isUnauthorized)
-    }
-
-    @Test
-    fun returns_401_when_new_problem_is_added_by_unidentified_user() {
-        given(usersClient.findUser(DUMMY_TOKEN)).willReturn(null)
-
-        mockMvc.perform(put("/problems")
-                .header("X-Authorization", DUMMY_TOKEN)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(TWO_SUM_PROBLEM_JSON))
-                .andExpect(status().isUnauthorized)
-    }
-
-    @Test
-    fun returns_201_and_newly_added_problem() {
-        given(usersClient.findUser(DUMMY_TOKEN)).willReturn(User("ADMIN"))
-
-        mockMvc.perform(put("/problems")
-                .header("X-Authorization", DUMMY_TOKEN)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(TWO_SUM_PROBLEM_JSON))
-                .andExpect(status().isCreated)
-                .andExpect(jsonPath("$.id", `is`("2-sum")))
-    }
-
     @TestConfiguration
     open class ControllerTestConfiguration {
         @Bean
         open fun problemsRepository() = repository
     }
-
-    private val DUMMY_TOKEN = "Bearer 123j12n31lkmdp012j21d"
 
     @Language("JSON")
     private val TWO_SUM_PROBLEM_JSON = """{
