@@ -60,7 +60,7 @@ open class ProblemsControllerSpec {
         mockMvc.perform(get("/problems")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk)
-                .andExpect(jsonPath("$", hasSize<ArrayNode>(54)))
+                .andExpect(jsonPath("$", hasSize<ArrayNode>(55)))
     }
 
     @TestConfiguration

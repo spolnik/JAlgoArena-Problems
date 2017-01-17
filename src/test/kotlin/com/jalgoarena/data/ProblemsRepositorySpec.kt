@@ -30,7 +30,7 @@ class ProblemsRepositorySpec {
     @Test
     fun should_return_all_available_problems() {
         val problems = repository.findAll()
-        problems.should.have.size(54)
+        problems.should.have.size.above(54)
     }
 
     @Test
