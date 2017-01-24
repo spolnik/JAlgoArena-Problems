@@ -2,6 +2,7 @@ package com.jalgoarena.data
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.jalgoarena.domain.Problem
+import com.jalgoarena.utils.SetupProblemsStore
 import com.winterbe.expekt.should
 import org.junit.AfterClass
 import org.junit.Test
@@ -15,14 +16,14 @@ class ProblemsRepositorySpec {
         var repository: ProblemsRepository
 
         init {
-            SetupProblemsXodusStore(dbName).createDb()
+            SetupProblemsStore(dbName).createDb()
             repository = XodusProblemsRepository(dbName)
         }
 
         @AfterClass
         @JvmStatic fun tearDown() {
             repository.destroy()
-            SetupProblemsXodusStore(dbName).removeDb()
+            SetupProblemsStore(dbName).removeDb()
         }
     }
 
