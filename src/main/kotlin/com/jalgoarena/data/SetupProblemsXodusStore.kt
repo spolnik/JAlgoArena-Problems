@@ -1,4 +1,4 @@
-package com.jalgoarena.utils
+package com.jalgoarena.data
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.jalgoarena.domain.Constants
@@ -6,13 +6,13 @@ import com.jalgoarena.domain.Problem
 import jetbrains.exodus.entitystore.PersistentEntityStores
 import java.io.File
 
-class SetupProblemsStore(val dbName: String) {
+class SetupProblemsXodusStore(val dbName: String) : SetupProblemsDb {
 
     private fun toJson(obj: Any): String {
         return jacksonObjectMapper().writeValueAsString(obj)
     }
 
-    fun createDb() {
+    override fun createDb() {
         val store = PersistentEntityStores.newInstance(dbName)
 
         try {
@@ -40,13 +40,7 @@ class SetupProblemsStore(val dbName: String) {
         }
     }
 
-    fun removeDb() {
+    override fun removeDb() {
         File(dbName).deleteRecursively()
     }
-}
-
-fun main(args: Array<String>) {
-    val setup = SetupProblemsStore(Constants.storePath)
-    setup.removeDb()
-    setup.createDb()
 }

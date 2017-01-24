@@ -1,2 +1,3 @@
 ignore:
   - "src/main/kotlin/com/jalgoarena/JAlgoArenaProblemsApp.kt"
+  - "src/main/kotlin/com/jalgoarena/data/ProblemsDbInitialize.kt"

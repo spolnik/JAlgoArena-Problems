@@ -1,6 +1,5 @@
 .gradle
 build/
 .idea
-ProblemsStore/xd.lck
-ProblemsStoreForTests
+ProblemsStore/
 logs

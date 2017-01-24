@@ -2,12 +2,11 @@ package com.jalgoarena.web
 
 import com.fasterxml.jackson.databind.node.ArrayNode
 import com.jalgoarena.data.ProblemsRepository
+import com.jalgoarena.data.SetupProblemsXodusStore
 import com.jalgoarena.data.XodusProblemsRepository
-import com.jalgoarena.utils.SetupProblemsStore
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.Matchers.greaterThan
 import org.hamcrest.Matchers.hasSize
-import org.intellij.lang.annotations.Language
 import org.junit.AfterClass
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -33,14 +32,14 @@ open class ProblemsControllerSpec {
         var repository: ProblemsRepository
 
         init {
-            SetupProblemsStore(dbName).createDb()
+            SetupProblemsXodusStore(dbName).createDb()
             repository = XodusProblemsRepository(dbName)
         }
 
         @AfterClass
         @JvmStatic fun tearDown() {
             repository.destroy()
-            SetupProblemsStore(dbName).removeDb()
+            SetupProblemsXodusStore(dbName).removeDb()
         }
     }
 
