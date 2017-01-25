@@ -2,13 +2,14 @@
 
 JAlgoArena Problems is service dedicated for keeping problems definitions and their meta-data.
 
-Demo: https://jalgoarena-ui.herokuapp.com/
+Demo: https://jalgoarena-problems.herokuapp.com/
 
 - [Introduction](#introduction)
+- [REST API](#rest-api)
 - [Components](#components)
 - [Continuous Delivery](#continuous-delivery)
 - [Infrastructure](#infrastructure)
-- [Running Locally] (#running-locally)
+- [Running Locally](#running-locally)
 - [Notes](#notes)
 
 ## Introduction
@@ -16,6 +17,13 @@ Demo: https://jalgoarena-ui.herokuapp.com/
 - JAlgoArena Problems allows user to query problems definitions and meta data required for Judge Agent to generate skeleton code in particular language. Additionally - it allows administrator to create new problems or edit existing ones.
 
 ![Component Diagram](https://github.com/spolnik/JAlgoArena-Problems/raw/master/design/component_diagram.png)
+
+# REST API
+
+| Endpoint | Description |
+| ---- | --------------- |
+| [GET /problems](https://jalgoarena-problems.herokuapp.com/problems) | Get problems list |
+| [GET /problems/:id](https://jalgoarena-problems.herokuapp.com/problems/fib) | Get problem by id |
 
 ## Components
 
