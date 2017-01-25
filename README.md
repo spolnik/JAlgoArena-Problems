@@ -15,7 +15,7 @@ Demo: https://jalgoarena-ui.herokuapp.com/
 
 - JAlgoArena Problems allows user to query problems definitions and meta data required for Judge Agent to generate skeleton code in particular language. Additionally - it allows administrator to create new problems or edit existing ones.
 
-![Component Diagram](https://github.com/spolnik/JAlgoArena/raw/master/design/component_diagram.png)
+![Component Diagram](https://github.com/spolnik/JAlgoArena-Problems/raw/master/design/component_diagram.png)
 
 ## Components
 
