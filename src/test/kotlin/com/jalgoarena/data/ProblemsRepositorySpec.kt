@@ -59,7 +59,7 @@ class ProblemsRepositorySpec {
                 fibProblem.description,
                 fibProblem.timeLimit,
                 fibProblem.memoryLimit,
-                fibProblem.function,
+                fibProblem.func,
                 fibProblem.testCases,
                 fibProblem.level
         )

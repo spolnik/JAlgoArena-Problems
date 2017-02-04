@@ -30,7 +30,7 @@ class SetupProblemsStore(val dbName: String) {
                         setProperty(Constants.problemLevel, problem.level)
                         setProperty(Constants.problemMemoryLimit, problem.memoryLimit)
                         setProperty(Constants.problemTimeLimit, problem.timeLimit)
-                        setProperty(Constants.problemFunction, toJson(problem.function!!))
+                        setProperty(Constants.problemFunction, toJson(problem.func!!))
                         setProperty(Constants.problemTestCases, toJson(problem.testCases!!))
                     }
                 }
