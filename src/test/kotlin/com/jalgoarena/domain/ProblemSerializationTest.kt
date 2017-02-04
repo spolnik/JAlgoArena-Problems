@@ -74,7 +74,7 @@ class ProblemSerializationTest {
   "memoryLimit": 32,
   "func": {
     "name": "twoSum",
-    "return": {
+    "returnStatement": {
       "type": "[I",
       "comment": " Indices of the two numbers"
     },

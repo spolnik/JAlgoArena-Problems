@@ -41,7 +41,7 @@ class FunctionSerializationTest {
     @Language("JSON")
     private val TWO_SUM_FUNCTION_AS_JSON = """{
   "name": "twoSum",
-  "return": {
+  "returnStatement": {
     "type": "[I",
     "comment": " Indices of the two numbers"
   },
