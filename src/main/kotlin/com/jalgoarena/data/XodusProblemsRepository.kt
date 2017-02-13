@@ -56,7 +56,6 @@ class XodusProblemsRepository(dbName: String) : ProblemsRepository {
             setProperty(Constants.problemTitle, problem.title)
             setProperty(Constants.problemDescription, problem.description)
             setProperty(Constants.problemLevel, problem.level)
-            setProperty(Constants.problemMemoryLimit, problem.memoryLimit)
             setProperty(Constants.problemTimeLimit, problem.timeLimit)
             setProperty(Constants.problemFunction, toJson(problem.func!!))
             setProperty(Constants.problemTestCases, toJson(problem.testCases!!))

@@ -7,7 +7,6 @@ object Constants {
     val problemTitle = "title"
     val problemDescription = "description"
     val problemLevel = "level"
-    val problemMemoryLimit = "memoryLimit"
     val problemTimeLimit = "timeLimit"
     val problemFunction = "func"
     val problemTestCases = "testCases"
