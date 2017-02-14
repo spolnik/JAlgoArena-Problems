@@ -36,7 +36,7 @@ class ProblemSerializationTest {
             "2-sum",
             "2 Sum",
             "Given an array of integers, find two numbers such that they add up to a specific target number.\r\n\r\nThe method `twoSum` should return indices of the two numbers such that they add up to the target, where *index1* must be less than *index2*. Please note that your returned answers (both *index1* and *index2*) are not zero-based.\r\n\r\n**Note**: You may assume that each input would have exactly one solution.\r\n\r\n### Example\r\n\r\n* `[2,7,11,15], 9` -> `[1,2]`",
-            1L,
+            1,
             Function("twoSum",
                     Function.Return("[I",
                             " Indices of the two numbers"),

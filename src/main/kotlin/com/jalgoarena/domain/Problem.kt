@@ -12,7 +12,7 @@ import jetbrains.exodus.entitystore.Entity
 data class Problem(val id: String,
                    val title: String,
                    val description: String,
-                   val timeLimit: Long,
+                   val timeLimit: Int,
                    val func: Function?,
                    val testCases: List<TestCase>?,
                    val level: Int) {
@@ -38,7 +38,7 @@ data class Problem(val id: String,
                     entity.getProperty(Constants.problemId) as String,
                     entity.getProperty(Constants.problemTitle) as String,
                     entity.getProperty(Constants.problemDescription) as String,
-                    entity.getProperty(Constants.problemTimeLimit) as Long,
+                    entity.getProperty(Constants.problemTimeLimit) as Int,
                     function,
                     testCases.toList(),
                     entity.getProperty(Constants.problemLevel) as Int
