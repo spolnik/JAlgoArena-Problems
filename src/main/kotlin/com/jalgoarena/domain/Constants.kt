@@ -1,13 +1,13 @@
 package com.jalgoarena.domain
 
 object Constants {
-    val entityType = "Problem"
-    val storePath = "./ProblemsStore"
-    val problemId = "id"
-    val problemTitle = "title"
-    val problemDescription = "description"
-    val problemLevel = "level"
-    val problemTimeLimit = "timeLimit"
-    val problemFunction = "func"
-    val problemTestCases = "testCases"
+    const val ENTITY_TYPE = "Problem"
+    const val STORE_PATH = "./ProblemsStore"
+    const val problemId = "id"
+    const val problemTitle = "title"
+    const val problemDescription = "description"
+    const val problemLevel = "level"
+    const val problemTimeLimit = "timeLimit"
+    const val problemFunction = "func"
+    const val problemTestCases = "testCases"
 }

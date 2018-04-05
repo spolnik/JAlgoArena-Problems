@@ -12,9 +12,9 @@ class ProblemsController(
         @Inject private val repository: ProblemsRepository
 ) {
 
-    @GetMapping("/problems", produces = arrayOf("application/json"))
+    @GetMapping("/problems", produces = ["application/json"])
     fun problems(): List<Problem> = repository.findAll()
 
-    @GetMapping("/problems/{id}", produces = arrayOf("application/json"))
+    @GetMapping("/problems/{id}", produces = ["application/json"])
     fun problem(@PathVariable id: String) = repository.find(id)
 }

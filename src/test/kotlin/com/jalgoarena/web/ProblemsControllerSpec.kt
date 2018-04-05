@@ -7,7 +7,6 @@ import com.jalgoarena.utils.SetupProblemsStore
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.Matchers.greaterThan
 import org.hamcrest.Matchers.hasSize
-import org.intellij.lang.annotations.Language
 import org.junit.AfterClass
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -25,22 +24,22 @@ import javax.inject.Inject
 
 @RunWith(SpringRunner::class)
 @WebMvcTest(ProblemsController::class)
-@ContextConfiguration(classes = arrayOf(ProblemsControllerSpec.ControllerTestConfiguration::class))
+@ContextConfiguration(classes = [(ProblemsControllerSpec.ControllerTestConfiguration::class)])
 open class ProblemsControllerSpec {
 
     companion object {
-        val dbName = "./ProblemsStoreForControllerTests"
-        var repository: ProblemsRepository
+        private const val TEST_DB_NAME = "./ProblemsStoreForControllerTests"
 
+        var repository: ProblemsRepository
         init {
-            SetupProblemsStore(dbName).createDb()
-            repository = XodusProblemsRepository(dbName)
+            SetupProblemsStore(TEST_DB_NAME).createDb()
+            repository = XodusProblemsRepository(TEST_DB_NAME)
         }
 
         @AfterClass
         @JvmStatic fun tearDown() {
             repository.destroy()
-            SetupProblemsStore(dbName).removeDb()
+            SetupProblemsStore(TEST_DB_NAME).removeDb()
         }
     }
 

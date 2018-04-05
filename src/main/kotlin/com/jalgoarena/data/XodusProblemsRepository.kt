@@ -11,23 +11,23 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Repository
 
 @Repository
-class XodusProblemsRepository(dbName: String) : ProblemsRepository {
+open class XodusProblemsRepository(dbName: String) : ProblemsRepository {
 
-    constructor() : this(Constants.storePath)
+    constructor() : this(Constants.STORE_PATH)
 
-    private val LOG = LoggerFactory.getLogger(this.javaClass)
+    private val logger = LoggerFactory.getLogger(this.javaClass)
     private val store: PersistentEntityStore = PersistentEntityStores.newInstance(dbName)
 
     override fun findAll(): List<Problem> {
         return readonly {
-            it.getAll(Constants.entityType).map { Problem.from(it) }
+            it.getAll(Constants.ENTITY_TYPE).map { Problem.from(it) }
         }
     }
 
     override fun find(id: String): Problem? {
         return readonly {
             it.find(
-                    Constants.entityType,
+                    Constants.ENTITY_TYPE,
                     Constants.problemId,
                     id
             ).map { Problem.from(it) }.firstOrNull()
@@ -38,11 +38,11 @@ class XodusProblemsRepository(dbName: String) : ProblemsRepository {
         return transactional {
 
             val existingEntity = it.find(
-                    Constants.entityType, Constants.problemId, problem.id
+                    Constants.ENTITY_TYPE, Constants.problemId, problem.id
             ).firstOrNull()
 
             val entity = when (existingEntity) {
-                null -> it.newEntity(Constants.entityType)
+                null -> it.newEntity(Constants.ENTITY_TYPE)
                 else -> existingEntity
             }
 
@@ -66,11 +66,11 @@ class XodusProblemsRepository(dbName: String) : ProblemsRepository {
 
     override fun destroy() {
         try {
-            LOG.info("Closing persistent store.")
+            logger.info("Closing persistent store.")
             store.close()
-            LOG.info("persistent store closed")
+            logger.info("persistent store closed")
         } catch (e: RuntimeException) {
-            LOG.error("error closing persistent store", e)
+            logger.error("error closing persistent store", e)
         }
     }
 

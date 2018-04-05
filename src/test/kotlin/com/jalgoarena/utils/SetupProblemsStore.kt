@@ -6,16 +6,16 @@ import com.jalgoarena.domain.Problem
 import jetbrains.exodus.entitystore.PersistentEntityStores
 import java.io.File
 
-class SetupProblemsStore(val dbName: String) {
+class SetupProblemsStore(private val dbName: String) {
 
     private fun toJson(obj: Any): String {
         return jacksonObjectMapper().writeValueAsString(obj)
     }
 
     fun createDb() {
-        val store = PersistentEntityStores.newInstance(dbName)
+        val persistentEntityStore = PersistentEntityStores.newInstance(dbName)
 
-        try {
+        persistentEntityStore.use { store ->
             val problems = jacksonObjectMapper().readValue(
                     File("problems.json"), Array<Problem>::class.java
             )
@@ -23,7 +23,7 @@ class SetupProblemsStore(val dbName: String) {
             problems.forEach { problem ->
 
                 store.executeInTransaction { txn ->
-                    txn.newEntity(Constants.entityType).apply {
+                    txn.newEntity(Constants.ENTITY_TYPE).apply {
                         setProperty(Constants.problemId, problem.id)
                         setProperty(Constants.problemTitle, problem.title)
                         setProperty(Constants.problemDescription, problem.description)
@@ -34,8 +34,6 @@ class SetupProblemsStore(val dbName: String) {
                     }
                 }
             }
-        } finally {
-            store.close()
         }
     }
 
@@ -45,7 +43,7 @@ class SetupProblemsStore(val dbName: String) {
 }
 
 fun main(args: Array<String>) {
-    val setup = SetupProblemsStore(Constants.storePath)
+    val setup = SetupProblemsStore(Constants.STORE_PATH)
     setup.removeDb()
     setup.createDb()
 }

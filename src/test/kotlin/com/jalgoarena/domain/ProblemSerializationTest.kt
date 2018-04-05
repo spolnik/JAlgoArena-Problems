@@ -32,40 +32,41 @@ class ProblemSerializationTest {
                 .isEqualTo(TWO_SUM_PROBLEM)
     }
 
-    private val TWO_SUM_PROBLEM = Problem(
-            "2-sum",
-            "2 Sum",
-            "Given an array of integers, find two numbers such that they add up to a specific target number.\r\n\r\nThe method `twoSum` should return indices of the two numbers such that they add up to the target, where *index1* must be less than *index2*. Please note that your returned answers (both *index1* and *index2*) are not zero-based.\r\n\r\n**Note**: You may assume that each input would have exactly one solution.\r\n\r\n### Example\r\n\r\n* `[2,7,11,15], 9` -> `[1,2]`",
-            1,
-            Function("twoSum",
-                    Function.Return("[I",
-                            " Indices of the two numbers"),
-                    listOf(Function.Parameter("nums", "[I", "An array of Integer"),
-                            Function.Parameter("target", "java.lang.Integer",
-                                    "target = numbers[index1] + numbers[index2]")
-                    )
-            ),
-            listOf(
-                Problem.TestCase(
-                        arrayNode().add(
-                            arrayNode().add(2).add(7).add(11).add(15)
-                        ).add(IntNode(9)),
-                        arrayNode().add(1).add(2)
+    companion object {
+        private val TWO_SUM_PROBLEM = Problem(
+                "2-sum",
+                "2 Sum",
+                "Given an array of integers, find two numbers such that they add up to a specific target number.\r\n\r\nThe method `twoSum` should return indices of the two numbers such that they add up to the target, where *index1* must be less than *index2*. Please note that your returned answers (both *index1* and *index2*) are not zero-based.\r\n\r\n**Note**: You may assume that each input would have exactly one solution.\r\n\r\n### Example\r\n\r\n* `[2,7,11,15], 9` -> `[1,2]`",
+                1,
+                Function("twoSum",
+                        Function.Return("[I",
+                                " Indices of the two numbers"),
+                        listOf(Function.Parameter("nums", "[I", "An array of Integer"),
+                                Function.Parameter("target", "java.lang.Integer",
+                                        "target = numbers[index1] + numbers[index2]")
+                        )
                 ),
-                Problem.TestCase(
-                        arrayNode().add(
-                                arrayNode().add(1).add(0).add(-1)
-                        ).add(IntNode(-1)),
-                        arrayNode().add(2).add(3)
-                )
-            ),
-            2
-    )
+                listOf(
+                        Problem.TestCase(
+                                arrayNode().add(
+                                        arrayNode().add(2).add(7).add(11).add(15)
+                                ).add(IntNode(9)),
+                                arrayNode().add(1).add(2)
+                        ),
+                        Problem.TestCase(
+                                arrayNode().add(
+                                        arrayNode().add(1).add(0).add(-1)
+                                ).add(IntNode(-1)),
+                                arrayNode().add(2).add(3)
+                        )
+                ),
+                2
+        )
 
-    private fun arrayNode() = ArrayNode(JsonNodeFactory.instance)
+        private fun arrayNode() = ArrayNode(JsonNodeFactory.instance)
 
-    @Language("JSON")
-    private val TWO_SUM_PROBLEM_JSON = """{
+        @Language("JSON")
+        private val TWO_SUM_PROBLEM_JSON = """{
   "id": "2-sum",
   "title": "2 Sum",
   "description": "Given an array of integers, find two numbers such that they add up to a specific target number.\r\n\r\nThe method `twoSum` should return indices of the two numbers such that they add up to the target, where *index1* must be less than *index2*. Please note that your returned answers (both *index1* and *index2*) are not zero-based.\r\n\r\n**Note**: You may assume that each input would have exactly one solution.\r\n\r\n### Example\r\n\r\n* `[2,7,11,15], 9` -> `[1,2]`",
@@ -123,4 +124,5 @@ class ProblemSerializationTest {
   "level": 2
 }
 """
+    }
 }

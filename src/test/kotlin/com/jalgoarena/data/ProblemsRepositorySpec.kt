@@ -12,18 +12,18 @@ import java.io.File
 class ProblemsRepositorySpec {
 
     companion object {
-        val dbName = "./ProblemsStoreForTests"
-        var repository: ProblemsRepository
+        private const val TEST_DB_NAME = "./ProblemsStoreForTests"
 
+        var repository: ProblemsRepository
         init {
-            SetupProblemsStore(dbName).createDb()
-            repository = XodusProblemsRepository(dbName)
+            SetupProblemsStore(TEST_DB_NAME).createDb()
+            repository = XodusProblemsRepository(TEST_DB_NAME)
         }
 
         @AfterClass
         @JvmStatic fun tearDown() {
             repository.destroy()
-            SetupProblemsStore(dbName).removeDb()
+            SetupProblemsStore(TEST_DB_NAME).removeDb()
         }
     }
 
@@ -51,7 +51,7 @@ class ProblemsRepositorySpec {
                 File("problems.json"), Array<Problem>::class.java
         )
 
-        val fibProblem = problems.filter { it.id == "fib" }.first()
+        val fibProblem = problems.first { it.id == "fib" }
 
         val newTestProblem = Problem(
                 "test-fib",

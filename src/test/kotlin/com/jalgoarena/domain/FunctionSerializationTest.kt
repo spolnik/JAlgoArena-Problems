@@ -29,17 +29,19 @@ class FunctionSerializationTest {
                 .isEqualTo(TWO_SUM_FUNCTION)
     }
 
-    private val TWO_SUM_FUNCTION = Function("twoSum",
-            Function.Return("[I",
-                    " Indices of the two numbers"),
-            listOf(Function.Parameter("numbers", "[I", "An array of Integer"),
-                    Function.Parameter("target", "java.lang.Integer",
-                            "target = numbers[index1] + numbers[index2]")
-            )
-    )
+    companion object {
 
-    @Language("JSON")
-    private val TWO_SUM_FUNCTION_AS_JSON = """{
+        private val TWO_SUM_FUNCTION = Function("twoSum",
+                Function.Return("[I",
+                        " Indices of the two numbers"),
+                listOf(Function.Parameter("numbers", "[I", "An array of Integer"),
+                        Function.Parameter("target", "java.lang.Integer",
+                                "target = numbers[index1] + numbers[index2]")
+                )
+        )
+
+        @Language("JSON")
+        private val TWO_SUM_FUNCTION_AS_JSON = """{
   "name": "twoSum",
   "returnStatement": {
     "type": "[I",
@@ -59,4 +61,5 @@ class FunctionSerializationTest {
   ]
 }
 """
+    }
 }
