@@ -18,7 +18,7 @@ Demo: https://jalgoarena-problems.herokuapp.com/
 
 ![Component Diagram](https://github.com/spolnik/JAlgoArena-Problems/raw/master/design/component_diagram.png)
 
-# REST API
+## REST API
 
 | Endpoint | Description |
 | ---- | --------------- |
