@@ -52,7 +52,6 @@ Demo: https://jalgoarena-problems.herokuapp.com/
 ## Running locally
 
 There are two ways to run it - from sources or from binaries.
-- Default port: `5002`
 
 ### Running from binaries
 - go to [releases page](https://github.com/spolnik/JAlgoArena-Problems/releases) and download last app package (JAlgoArena-Problems-[version_number].zip)
