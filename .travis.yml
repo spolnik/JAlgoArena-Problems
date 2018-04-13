@@ -9,14 +9,14 @@ before_cache:
 - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 cache:
   directories:
-  - $HOME/.gradle/caches/
-  - $HOME/.gradle/wrapper/
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
 before_deploy:
-- ./gradlew releaseZip
+- "./gradlew releaseZip"
 deploy:
   provider: releases
   api_key:
-    secure: B2umkw5FbcDWShouBagt5e1yhcZHmsGfYDiSCjonHop9S44WFzyOxGSLifGu4sPWl61zQJ88JEmT0G70E8YWdbldGiJdiZ6ow1/40dCClX4tiSImJiWpvLYbbs9hXzFe3ePvohGp0Sx6yA/adZwqUV9v+0fU9ZZpn8xk2IWRV0QIYYc5rWthSnS2G9SfB161W/URR/Cxtr1FU1Itgt5eJY40ndgVRCdwAux1USfU6e8sK8kCoedSu1dAy4PkjdH0J8xumHcWxEbtNhSb0NE4xZdV2UIEkKGduISOf9tJvuJxMTqyaJqxwI2gPTWRUexUZd6Sm4amRSl6KKM4ClwKSh9GBDockPwAK4X2WNUSarnWXY9m1IQzrdx/6+bYEnTxvnIg+38FxP3S1Npx4mLqDTHbqNjSnSsEcGDSKASJQAQJHc7drGqsqIgMaJd3p+lu3NxDtZjru5woU7xmieUTUWMlM2JSQRvX+7GDGOfpONstM13kgT2ZykJ7xdtRHm5rRZEGPjQpWkUggkoJ32Hc9Q6NKWBr+R7bbp9FHpj3LM8N3WZMzaan64FkoCR74dt7t+7lNVHoHH94BVbMj72xSezCmj6fQWr3+O5hIRR8g31KTT7cxg4gA6be80VM9COOYcSIzGEfZld9hHDdgXvudc5x8QNgI+w42Co1gZe+sGM=
+    secure: 6OQPFJbBmSx/FL+HxvHhhYRhO4ZpL5xqLjQCkddjGuelYC0rhLDMyk4I4+LZfn+OMMFikhMGpN4c2J70LCF27pfOyIchfE9gJPxmJ2kHqpWdItrz2KHW4UKyjmwNl2c0b9lBa+qnsP702TI/Br17aZcBdK30IsK4KujzcZ1b6MtecijAx2F9GnJeg0UFTLoejAkWs03GS56mUvDzgqgwKh5hpclE/+UGUN43KkFNCZXxw/y3ueNZ2UtsanmeCxV/RYALnU5IS7L4R514aK4Co+vUsw04HOictFfqHAG+iHkwC5G8UKSRwfNRP4qMje7d564q/uOQH/VHgf9dkhg6BJF0hHtAvljmJpxBpkAphmv0f7tsCOc6sWQVXk34aw4W+e2P4r30KCGHgmljgoH9QqnlYCVVEOw/4fVrVkdcBP96eTq4fcLXsRmKJ0idrXzcOxnSGDzJDVmMQG9tVYIA00nsta8laqile6U1RZtdYPVqX9X1pTl1VPDo6UF/TDcf03m1L2yHAV5III1WcEDv2Q02T0aR60TFFzbD+IMcrPbhBh1XyrAEXl3OEUg9Se7C/Op7Cq25DgzpP3jijm5ci9+wGJiX3YnlfvsNjXJwA33r8T7+6uJGgdkaa109TzjZ5m4tdnkl4SwqmHavz81OzBHiAOAafbkULeic3fgasGA=
   file_glob: true
   file: "./build/libs/JAlgoArena-Problems-*.zip"
   skip_cleanup: true
