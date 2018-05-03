@@ -38,7 +38,8 @@ dependencies {
             "org.jetbrains.kotlin:kotlin-stdlib",
             "org.jetbrains.kotlin:kotlin-reflect",
             "org.jetbrains.xodus:xodus-openAPI:$xodus_version",
-            "org.jetbrains.xodus:xodus-entity-store:$xodus_version"
+            "org.jetbrains.xodus:xodus-entity-store:$xodus_version",
+            'net.logstash.logback:logstash-logback-encoder:5.1'
 
     testCompile 'junit:junit:4.12',
             "com.winterbe:expekt:0.5.0",
