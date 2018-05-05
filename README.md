@@ -1,3 +1,5 @@
+> **DEPRECATED**
+
 # JAlgoArena Problems [![Build Status](https://travis-ci.org/spolnik/JAlgoArena-Problems.svg?branch=master)](https://travis-ci.org/spolnik/JAlgoArena-Problems) [![codecov](https://codecov.io/gh/spolnik/JAlgoArena-Problems/branch/master/graph/badge.svg)](https://codecov.io/gh/spolnik/JAlgoArena-Problems) [![GitHub release](https://img.shields.io/github/release/spolnik/jalgoarena-problems.svg)]()
 
 JAlgoArena Problems is service dedicated for keeping problems definitions and their meta-data.
